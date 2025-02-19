@@ -1,8 +1,3 @@
-function getHumanChoice() {
-  userValue = prompt('Enter "Rock/paper/scissor" anyone!').toLowerCase()
-  return userValue
-}
-
 function getComputerChoice() {
   str = Math.floor(Math.random() * 3)
   if (str === 0) return 'rock'
@@ -12,43 +7,79 @@ function getComputerChoice() {
 
 let humanScore = 0
 let computerScore = 0
+let gameCount = 0
 
-function playRound() {
-  const humanChoice = getHumanChoice();
+function playRound(hChoice) {
+  if (gameCount === 5) resetGame()  
+  let humanChoice = hChoice
+  let playedRound = ''
   const computerChoice = getComputerChoice();
   if (humanChoice == 'rock' && computerChoice == 'paper') {
     computerScore++
-    console.log('Paper beats Rock', ', Your Choice: ', humanChoice, ', Computer Choice: ', computerChoice, ', Your Score: ', humanScore, ', Computer Score: ', computerScore);
+    playedRound = 'Paper beats Rock'
   }
   else if (humanChoice == 'rock' && computerChoice == 'scissor') {
     humanScore++
-    console.log('rock beats scissor', ', Your Choice: ', humanChoice, ', Computer Choice: ', computerChoice, ', Your Score: ', humanScore, ', Computer Score: ', computerScore);
+    playedRound = 'rock beats scissor'
   }
   else if (humanChoice == 'paper' && computerChoice == 'rock') {
     humanScore++
-    console.log('Paper beats Rock', ', Your Choice: ', humanChoice, ', Computer Choice: ', computerChoice, ', Your Score: ', humanScore, ', Computer Score: ', computerScore);
+    playedRound = 'Paper beats Rock'
   }
   else if (humanChoice == 'paper' && computerChoice == 'scissor') {
     computerScore++
-    console.log('Scissor beats Paper', ', Your Choice: ', humanChoice, ', Computer Choice: ', computerChoice, ', Your Score: ', humanScore, ', Computer Score: ', computerScore);
+    playedRound = 'Scissor beats Paper'
   }
   else if (humanChoice == 'scissor' && computerChoice == 'rock') {
     computerScore++
-    console.log('Rock beats Scissor', ', Your Choice: ', humanChoice, ', Computer Choice: ', computerChoice, ', Your Score: ', humanScore, ', Computer Score: ', computerScore);
+    playedRound = 'Rock beats Scissor'
   }
   else if (humanChoice == 'scissor' && computerChoice == 'paper') {
     humanScore++
-    console.log('Scissor beats Paper', ', Your Choice: ', humanChoice, ', Computer Choice: ', computerChoice, ', Your Score: ', humanScore, ', Computer Score: ', computerScore);
+    playedRound = 'Scissor beats Paper'
   }
   else if (humanChoice == computerChoice) {
-    console.log('You both selected same choice!', ', Your Choice: ', humanChoice, ', Computer Choice: ', computerChoice, ', Your Score: ', humanScore, ', Computer Score: ', computerScore);
+    playedRound = 'You both selected same choice!'
   }
+  gameCount++
+  let li = document.createElement("li")
+  li.textContent = `Rounds ${gameCount}: ${playedRound}, Your Choice: ${humanChoice}, Computer Choice: ${computerChoice}, Your Score: ${humanScore}, Computer Score: ${computerScore}`
+  rounds.appendChild(li)
+  if (gameCount === 5) finalScore()
 }
 
-function playGame() {
-  console.log('Game will be of 5 Rounds, Lets start...');  
-  for (let i = 0; i < 5; i++) playRound()
-  console.log('Your Score: ', humanScore, ', Computer Score: ', computerScore, humanScore > computerScore ? 'You WON!!!' : humanScore < computerScore ? 'Computer won, You lose!': 'No one Won!, No one lose!');
+function finalScore () {
+  result.innerHTML = `<div>
+    <h1>${humanScore > computerScore ? 'You WON!!!' : humanScore < computerScore ? 'Computer won, You lose!': 'No one Won!, No one lose!'}</h1>
+  </div>`
 }
 
-playGame()
+function resetGame() {
+  rounds.innerHTML = ''
+  result.innerHTML = ''
+  gameCount = 0
+  humanScore = 0
+  computerScore = 0
+}
+
+// select Element
+let rock = document.getElementById("rock")
+let paper = document.querySelector("#paper")
+let scissor = document.getElementById("scissor")
+let result = document.getElementById("result")
+let rounds = document.getElementById("rounds")
+
+// hover effect
+rock.onmouseover = () => rock.style.borderColor="lightslategrey"
+rock.onmousedown = () => rock.style.borderColor="aqua"
+rock.onmouseout = () => rock.style.borderColor = ''
+paper.onmouseover = () => paper.style.borderColor="lightslategrey"
+paper.onmousedown = () => paper.style.borderColor="aqua"
+paper.onmouseout = () => paper.style.borderColor = ''
+scissor.onmouseover = () => scissor.style.borderColor="lightslategrey"
+scissor.onmousedown = () => scissor.style.borderColor="aqua"
+scissor.onmouseout = () => scissor.style.borderColor = ''
+
+rock.onclick = () => playRound("rock")
+paper.onclick = () => playRound("paper");
+scissor.onclick = () => playRound("scissor");
