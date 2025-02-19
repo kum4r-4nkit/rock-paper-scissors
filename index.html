@@ -4,9 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  Rock Paper Scissors Game
+
+<body class="flex">
+  <h1>Rock Paper Scissors Game</h1>
+  <div>
+    <span id="rock" class="choice rounded font-64px p-20px m-50px">&#129704;</span>
+    <span id="paper" class="choice rounded font-64px p-20px m-50px">&#128196;</span>
+    <span id="scissor" class="choice rounded font-64px p-20px m-50px">&#9986;</span>
+  </div>
+  <h2>Game is of 5 Rounds, Result will be shown below</h2>
+  <div id="rounds"></div>
+  <div id="result"></div>
   <script src="rock-paper-scissors.js" defer></script>
 </body>
+
 </html>
